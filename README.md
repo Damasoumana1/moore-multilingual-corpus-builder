@@ -1,5 +1,9 @@
 # Moore Corpus Builder 🇧🇫
 
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
 Un pipeline complet de collecte, d'alignement et de traitement de données pour la création d'un corpus trilingue (Mooré, Français, Anglais) destiné à l'intelligence artificielle (Traduction automatique, ASR, TTS).
 
 ## 🚀 Fonctionnalités
@@ -39,6 +43,23 @@ moore_corpus_builder/
 ├── main.py                # Point d'entrée du pipeline
 └── requirements.txt       # Dépendances Python
 ```
+
+## 🏛️ Architecture du Pipeline
+
+```mermaid
+graph TD
+    A[JW.org] -->|Scraping| B(Textes: Mooré, FR, EN)
+    A -->|Scraping| C(Audio MP3: Mooré)
+    B --> D[Alignement Trilingue]
+    C --> E[Rééchantillonnage 16kHz WAV]
+    D --> F{Indexation Multimodale}
+    E --> F
+    F --> G[(CSV & JSONL pour LLM/ASR)]
+```
+
+## 🧪 Données d'Exemple (Samples)
+
+Pour tester rapidement le code sans télécharger l'intégralité du corpus de 88 heures, un extrait est disponible dans le dossier `samples/`. Il contient un exemple de fichier audio formaté et de données textuelles alignées.
 
 ## 🛠️ Installation
 
