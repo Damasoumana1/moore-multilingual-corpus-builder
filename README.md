@@ -76,3 +76,10 @@ Toutes les données (textes et audios) utilisées dans ce projet proviennent du 
 - **Audios** : Enregistrements audio officiels de la Bible en Mooré disponibles sur la même plateforme.
 
 Ce projet est strictement destiné à un usage éducatif, linguistique et de recherche pour le développement d'outils d'intelligence artificielle pour la langue Mooré.
+
+## 👨‍💻 Contributeur Principal
+
+**Soumana Dama**  
+Software Engineer | Fullstack Web & Mobile Developer | AI and Data Engineer 💻🚀  
+- [LinkedIn](https://www.linkedin.com/in/soumana-dama-445096253/)
+- [Portfolio](https://soumanadama.netlify.app/)
