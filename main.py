@@ -37,6 +37,10 @@ def step_scrape():
     scrape_missing()
     from src.scraping.scrape_english import main as scrape_en
     scrape_en()
+    
+    banner("ÉTAPE 1b/4 — Scraping & Alignement des Articles Parallèles")
+    from src.scraping.scrape_articles import main as scrape_articles
+    scrape_articles()
 
 def step_align():
     banner("ÉTAPE 2/4 — Alignement Trilingue (66 livres)")

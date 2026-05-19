@@ -71,8 +71,14 @@ def main():
     print("📦 Groupement des versets par chapitre...")
     df_all['book_id'], df_all['chapter_id'], df_all['verse_num'] = zip(*df_all['verse_id'].apply(parse_id))
     
+    # Filter out non-Bible entries to prevent pandas from casting integers to floats due to NaN values
+    df_bible = df_all[df_all['book_id'].notna()].copy()
+    df_bible['book_id'] = df_bible['book_id'].astype(int)
+    df_bible['chapter_id'] = df_bible['chapter_id'].astype(int)
+    df_bible['verse_num'] = df_bible['verse_num'].astype(int)
+    
     # 3. Grouper par chapitre
-    chapters = df_all.groupby(['book_id', 'chapter_id'])
+    chapters = df_bible.groupby(['book_id', 'chapter_id'])
     
     # 4. Faire correspondre avec les fichiers audio
     index_data = []

@@ -70,10 +70,9 @@ def process_file(input_path: pathlib.Path, pair_name: str, ratios: list):
     
     print(f"  ✓ {pair_name} terminé.")
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--ratio', nargs=3, type=float, default=[0.8, 0.1, 0.1])
-    args = parser.parse_args()
+def main(ratio=None):
+    if ratio is None:
+        ratio = [0.8, 0.1, 0.1]
 
     print("=" * 60)
     print("GÉNÉRATION DES SPLITS (Multi-langues)")
@@ -83,17 +82,20 @@ def main():
     process_file(
         BASE_DIR / "data" / "translations" / "moore_fr.csv",
         "moore_fr",
-        args.ratio
+        ratio
     )
 
     # 2. Mooré-Anglais
     process_file(
         BASE_DIR / "data" / "translations" / "moore_en.csv",
         "moore_en",
-        args.ratio
+        ratio
     )
 
     print("\n✅ Tous les splits ont été générés dans data/processed/")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--ratio', nargs=3, type=float, default=[0.8, 0.1, 0.1])
+    args = parser.parse_args()
+    main(args.ratio)

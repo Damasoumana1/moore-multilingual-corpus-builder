@@ -96,10 +96,30 @@ def main(input_dir=None, output_dir=None):
     errors  = 0
     total_duration = 0
 
+    import soundfile as sf
+
     for i, f in enumerate(files, 1):
         # Conserver la structure de sous-dossiers
         rel = f.relative_to(inp)
         out_path = out / rel.with_suffix('.wav')
+
+        if out_path.exists() and out_path.stat().st_size > 0:
+            try:
+                snd_info = sf.info(str(out_path))
+                dur = snd_info.duration
+                total_duration += dur
+                results.append({
+                    "file":     out_path.name,
+                    "duration": round(dur, 2),
+                    "sr":       TARGET_SR,
+                    "status":   "ok"
+                })
+                # Periodic progress output to avoid flooding logs
+                if i % 100 == 0 or i == len(files):
+                    print(f"  [{i:>4}/{len(files)}] (Cache) ✓ {rel}  ({dur:.1f}s)")
+                continue
+            except Exception:
+                pass
 
         try:
             info = resample_file(f, out_path)

@@ -73,17 +73,35 @@ def main():
     # --- Alignement Mooré-Français ---
     print("\n[4/5] Alignement Mooré-Français...")
     aligned_fr = pd.merge(df_moore, df_french, on='verse_id', how='inner')
+    
+    art_fr_path = TRANS_DIR / "articles_fr.csv"
+    bible_count = len(aligned_fr)
+    art_count = 0
+    if art_fr_path.exists():
+        df_art_fr = pd.read_csv(art_fr_path)
+        art_count = len(df_art_fr)
+        aligned_fr = pd.concat([aligned_fr, df_art_fr], ignore_index=True)
+        
     aligned_fr = aligned_fr.sort_values('verse_id').reset_index(drop=True)
     aligned_fr.to_csv(OUTPUT_FR_PATH, index=False, encoding='utf-8')
-    print(f"  ✓ Sauvegardé : {OUTPUT_FR_PATH} ({len(aligned_fr)} paires)")
+    print(f"  ✓ Sauvegardé : {OUTPUT_FR_PATH} ({len(aligned_fr)} paires total: {bible_count} Bible + {art_count} articles)")
 
     # --- Alignement Mooré-Anglais ---
     print("\n[5/5] Alignement Mooré-Anglais...")
     if not df_english.empty:
         aligned_en = pd.merge(df_moore, df_english, on='verse_id', how='inner')
+        
+        art_en_path = TRANS_DIR / "articles_en.csv"
+        bible_count = len(aligned_en)
+        art_count = 0
+        if art_en_path.exists():
+            df_art_en = pd.read_csv(art_en_path)
+            art_count = len(df_art_en)
+            aligned_en = pd.concat([aligned_en, df_art_en], ignore_index=True)
+            
         aligned_en = aligned_en.sort_values('verse_id').reset_index(drop=True)
         aligned_en.to_csv(OUTPUT_EN_PATH, index=False, encoding='utf-8')
-        print(f"  ✓ Sauvegardé : {OUTPUT_EN_PATH} ({len(aligned_en)} paires)")
+        print(f"  ✓ Sauvegardé : {OUTPUT_EN_PATH} ({len(aligned_en)} paires total: {bible_count} Bible + {art_count} articles)")
     else:
         print("  ⚠ Données Anglais manquantes, moore_en.csv non généré.")
 
